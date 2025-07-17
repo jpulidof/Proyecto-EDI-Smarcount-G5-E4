@@ -1,4 +1,5 @@
-[![Open in Visual Studio Code](https://img.shields.io/badge/Abrir%20en-VS%20Code-blue?logo=visualstudiocode&logoColor=white)](vscode://vscode.git/clone?url=https%3A%2F%2Fgithub.com%2Fjpulidof%2FProyecto-EDI-Smarcount-G5-E4.git)
+[![Abrir en VS Code Web](https://img.shields.io/badge/Abrir%20en-VS%20Code%20Web-blue?logo=visualstudiocode&logoColor=white)](https://vscode.dev/github/jpulidof/Proyecto-EDI-Smarcount-G5-E4)
+
 
 
 # Proyecto Final Electrónica Digital I SmartCount
