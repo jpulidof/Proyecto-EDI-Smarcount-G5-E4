@@ -1,4 +1,4 @@
-module ultrasonic_controller #(
+module controlador_ultrasonido #(
     parameter TIME_TRIG = 500,
     parameter CLOCK_FREQ = 50_000_000,
     parameter SOUND_SPEED = 34300  // en cm/s
