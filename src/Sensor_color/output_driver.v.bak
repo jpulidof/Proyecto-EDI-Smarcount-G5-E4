@@ -4,8 +4,11 @@
 module output_driver (
     input wire [1:0] color_code,
     output reg [6:0] seg  // Display de 7 segmentos (activo en 0)
+    output wire [3:0] an  // Activación del dígito (ánodo común)
 );
-
+    
+    assign an = 4'b1110;
+   
     always @(*) begin
         // Mostrar una letra en el display según el color detectado
         case (color_code)

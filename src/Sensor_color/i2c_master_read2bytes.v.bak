@@ -39,7 +39,7 @@ module i2c_master_read2bytes (
                STOP     = 10,
                DONE     = 11;
 
-    // Temporizador simple para generar ticks de reloj lento
+    // Temporizador simple para generar ticks de reloj lento (249 kHz)
     always @(posedge clk or posedge rst) begin
         if (rst) clk_div <= 8'd200;
         else clk_div <= tick ? 8'd200 : clk_div - 1;

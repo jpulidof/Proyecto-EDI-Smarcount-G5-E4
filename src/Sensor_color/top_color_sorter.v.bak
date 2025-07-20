@@ -1,0 +1,71 @@
+// top_color_sorter.v
+// Módulo top que integra el sensor TCS34725 con salida en display 7 segmentos
+
+module top_color_sorter (
+    input wire clk,
+    input wire rst,
+    // I2C
+    inout wire sda,
+    output wire scl,
+    // Display
+    output wire [6:0] seg,
+    output wire [3:0] an
+);
+
+    // Señales internas
+    wire [15:0] i2c_data_out;
+    wire [7:0] i2c_reg_addr;
+    wire i2c_start;
+    wire i2c_done;
+    wire i2c_busy;
+    wire [15:0] red, green, blue;
+    wire [1:0] color_code;
+    wire ready;
+
+    // Instancia del I2C Master para lectura de 2 bytes
+    i2c_master_read2bytes i2c_inst (
+        .clk(clk),
+        .rst(rst),
+        .start(i2c_start),
+        .dev_addr(7'h29),           // Dirección del TCS34725 (7 bits)
+        .reg_addr(i2c_reg_addr),
+        .data_out(i2c_data_out),
+        .done(i2c_done),
+        .busy(i2c_busy),
+        .sda(sda),
+        .scl(scl)
+    );
+
+    // Instancia del controlador TCS34725
+    tcs34725_controller controller (
+        .clk(clk),
+        .rst(rst),
+        .start_i2c(i2c_start),
+        .done_i2c(i2c_done),
+        .busy_i2c(i2c_busy),
+        .dev_addr(),                // No se usa porque ya está fijo en el I2C Master
+        .reg_addr(i2c_reg_addr),
+        .data_in(i2c_data_out),
+        .red(red),
+        .green(green),
+        .blue(blue),
+        .ready(ready)
+    );
+
+    // Instancia del procesador de color
+    color_processor processor (
+        .red(red),
+        .green(green),
+        .blue(blue),
+        .color_code(color_code),
+        .ascii_color() // No usamos la salida ASCII aquí
+    );
+
+    // Instancia del driver de salida (solo display)
+    output_driver display_driver (
+        .color_code(color_code),
+        .seg(seg),
+        .an(an)
+    );
+
+endmodule

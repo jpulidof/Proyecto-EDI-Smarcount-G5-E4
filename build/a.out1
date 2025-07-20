@@ -1,14 +1,12 @@
-**** module/scope: tcs34725_controller
-     Flip-Flops   : 69
-     Logic Gates  : 14
-     MUX[2]: 2 slices
-     LPM[5]: 16 unaccounted
-     LOG[13]: 9 unaccounted
+**** module/scope: output_driver
+     Flip-Flops   : 0
+     Logic Gates  : 0
+     LPM[5]: 1 unaccounted
+     LOG[13]: 1 unaccounted
      LOG[14]: 1 unaccounted
 **** TOTALS
-     Flip-Flops   : 69
-     Logic Gates  : 14
-     MUX[2]: 2 slices
-     LPM[5]: 16 unaccounted
-     LOG[13]: 9 unaccounted
+     Flip-Flops   : 0
+     Logic Gates  : 0
+     LPM[5]: 1 unaccounted
+     LOG[13]: 1 unaccounted
      LOG[14]: 1 unaccounted

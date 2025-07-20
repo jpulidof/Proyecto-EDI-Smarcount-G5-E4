@@ -50,10 +50,15 @@ module tcs34725_controller (
                     dev_addr <= SENSOR_ADDR;
                     reg_addr <= REG_RDATAL;
                     state <= START_R;
+                    ready <= 0;
                 end
 
                 START_R: begin
                     start_i2c <= 0;
+                    state <= WAIT_R;
+                end
+
+                WAIT_R: begin
                     if (done_i2c) begin
                         red <= data_in;
                         start_i2c <= 1;
@@ -64,6 +69,10 @@ module tcs34725_controller (
 
                 START_G: begin
                     start_i2c <= 0;
+                    state <= WAIT_G;
+                end
+
+                WAIT_G: begin
                     if (done_i2c) begin
                         green <= data_in;
                         start_i2c <= 1;
@@ -74,6 +83,10 @@ module tcs34725_controller (
 
                 START_B: begin
                     start_i2c <= 0;
+                    state <= WAIT_B;
+                end
+
+                WAIT_B: begin
                     if (done_i2c) begin
                         blue <= data_in;
                         state <= DONE;
