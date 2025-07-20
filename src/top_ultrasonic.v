@@ -1,55 +1,48 @@
-`include "ultrasonic_controller.v"
-`include "generador_pulsos.v"
-
-module top_ultrasonic(
-    input clk,
-    input rst,
-    input echo_i,
-    output wire trigger_o,
-    output wire object_detected_o
+module top_ultrasonic #(
+    parameter CLOCK_FREQ = 50_000_000,       // Frecuencia del sistema (50 MHz)
+    parameter PULSE_INTERVAL_MS = 60,        // Intervalo entre pulsos
+    parameter DIST_THRESHOLD_CM = 10         // Distancia mínima para detección
+)(
+    input  wire clk,                         // Reloj principal
+    input  wire rst_n,                       // Reset activo bajo (DIP switch)
+    input  wire echo_i,                      // Entrada desde el sensor (ECHO)
+    output wire trigger_o,                   // Salida al sensor (TRIG)
+    output wire object_detected_o_fpga       // LED (activo bajo)
 );
 
-// Señales internas
-wire ready_i;
-wire [31:0] echo_counter;
-reg object_detected_reg;
+    // Reset activo alto
+    wire rst = ~rst_n;
 
-// === CONFIGURA AQUÍ LA DISTANCIA DE DETECCIÓN ===
-// Por ejemplo: 10 cm
-// echo_counter = (2 * distancia * freq_clk) / v_sonido
-// = (2 * 10 * 50_000_000) / 34300 ≈ 29_155 ciclos
-parameter DIST_THRESHOLD = 29155;
+    // Señal de pulso para habilitar medición
+    wire ready_pulse;
 
-// Instancia del generador de pulsos
-generador_pulsos #(
-    .CLOCK_FREQ(50_000_000),
-    .PULSE_INTERVAL_MS(60)
-) pulse_gen (
-    .clk(clk),
-    .rst(rst),
-    .pulse_out(ready_i)
-);
+    // Señal interna de detección
+    wire object_detected_internal;
 
-// Instancia del controlador ultrasónico
-controlador_ultrasonido ultrasonic0 (
-    .clk(clk),
-    .rst(rst),
-    .ready_i(ready_i),
-    .echo_i(echo_i),
-    .trigger_o(trigger_o),
-    .echo_counter(echo_counter)
-);
+    // Generador de pulsos cada 60 ms
+    generador_pulsos #(
+        .CLOCK_FREQ(CLOCK_FREQ),
+        .PULSE_INTERVAL_MS(PULSE_INTERVAL_MS)
+    ) u_pulsos (
+        .clk(clk),
+        .rst(rst),
+        .pulse_out(ready_pulse)
+    );
 
-// Lógica de detección de objeto
-always @(posedge clk) begin
-    if (rst)
-        object_detected_reg <= 1'b0;
-    else
-        object_detected_reg <= (echo_counter > 0 && echo_counter < DIST_THRESHOLD);
-end
+    // Controlador de sensor ultrasónico
+    controlador_ultrasonido #(
+        .CLOCK_FREQ(CLOCK_FREQ),
+        .DIST_THRESHOLD_CM(DIST_THRESHOLD_CM)
+    ) u_controlador_ultrasonido (
+        .clk(clk),
+        .rst(rst),
+        .ready_i(ready_pulse),
+        .echo_i(echo_i),
+        .trigger_o(trigger_o),
+        .object_detected_o(object_detected_internal)
+    );
 
-assign object_detected_o = object_detected_reg;
+    // Salida al LED (activo bajo)
+    assign object_detected_o_fpga = ~object_detected_internal;
 
 endmodule
-
-
