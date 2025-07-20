@@ -1,4 +1,4 @@
-module pulse_generator #(
+module generador_pulsos #(
     parameter CLOCK_FREQ = 50_000_000,         // 50 MHz
     parameter PULSE_INTERVAL_MS = 60           // cada 60 ms
 )(

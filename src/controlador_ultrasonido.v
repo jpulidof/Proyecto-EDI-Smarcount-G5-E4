@@ -25,14 +25,9 @@ wire trigger_done;
 assign trigger_o = (next_state == TRIGGER);
 assign trigger_done = (count_10us == TIME_TRIG);
 
-initial begin
-    fsm_state <= IDLE;
-    next_state <= IDLE;
-    count_10us <= 0;
-    echo_counter <= 0;
-end
 
-always @(negedge clk) begin
+
+always @(posedge clk) begin
     if (rst)
         fsm_state <= IDLE;
     else
@@ -49,7 +44,7 @@ always @(*) begin
     endcase
 end
 
-always @(negedge clk) begin
+always @(posedge clk) begin
     if (rst) begin
         count_10us <= 0;
         echo_counter <= 0;
@@ -71,6 +66,7 @@ always @(negedge clk) begin
         endcase
     end
 end
+
 
 endmodule
 

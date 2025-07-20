@@ -1,5 +1,5 @@
 `include "ultrasonic_controller.v"
-`include "pulse_generator.v"
+`include "generador_pulsos.v"
 
 module top_ultrasonic(
     input clk,
@@ -21,7 +21,7 @@ reg object_detected_reg;
 parameter DIST_THRESHOLD = 29155;
 
 // Instancia del generador de pulsos
-pulse_generator #(
+generador_pulsos #(
     .CLOCK_FREQ(50_000_000),
     .PULSE_INTERVAL_MS(60)
 ) pulse_gen (
@@ -31,7 +31,7 @@ pulse_generator #(
 );
 
 // Instancia del controlador ultrasónico
-ultrasonic_controller ultrasonic0 (
+controlador_ultrasonido ultrasonic0 (
     .clk(clk),
     .rst(rst),
     .ready_i(ready_i),
