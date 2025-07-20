@@ -1,4 +1,4 @@
-// tb_i2c_master_read2bytes.v
+teclado y todo // tb_i2c_master_read2bytes.v
 // Testbench para el módulo i2c_master_read2bytes
 
 `timescale 1ns/1ps
