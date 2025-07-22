@@ -1,4 +1,4 @@
-**** module/scope: output_driver
+**** module/scope: bcd_to_7seg
      Flip-Flops   : 0
      Logic Gates  : 0
      LPM[5]: 1 unaccounted

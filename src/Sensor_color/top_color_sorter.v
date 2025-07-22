@@ -8,55 +8,69 @@ module top_color_sorter (
     inout wire sda,
     output wire scl,
     // Display
-    output wire [6:0] seg
+    output wire [6:0] seg,
+    output wire [3:0] an
 );
 
     // Señales internas
-    wire [7:0] i2c_data_out;
-    wire [7:0] i2c_reg_addr;
-    wire i2c_start;
-    wire i2c_ready;
     wire [15:0] red, green, blue;
     wire [1:0] color_code;
+    wire [7:0] ascii_color;
 
-    // Instancia del I2C Master
-    i2c_master i2c_inst (
+    // Señales I2C
+    wire i2c_start;
+    wire [6:0] i2c_dev_addr;
+    wire [7:0] i2c_reg_addr;
+    wire [15:0] i2c_data_out;
+    wire i2c_done;
+    wire busy_i2c;
+
+    // --- Controlador del sensor de color ---
+    tcs34725_controller color_controller (
+        .clk(clk),
+        .rst(rst),
+        .start_i2c(i2c_start),
+        .done_i2c(i2c_done),
+        .busy_i2c(busy_i2c),
+        .dev_addr(i2c_dev_addr),
+        .reg_addr(i2c_reg_addr),
+        .data_in(i2c_data_out),
+        .red(red),
+        .green(green),
+        .blue(blue),
+        .ready() // opcional
+    );
+
+    // --- Interfaz I2C compartida ---
+    i2c_master_read2bytes i2c_inst (
         .clk(clk),
         .rst(rst),
         .start(i2c_start),
+        .dev_addr(i2c_dev_addr),
         .reg_addr(i2c_reg_addr),
         .data_out(i2c_data_out),
-        .ready(i2c_ready),
-        .sda(sda),
-        .scl(scl)
+        .done(i2c_done),
+        .busy(busy_i2c),
+        .scl(scl),
+        .sda(sda)
     );
 
-    // Instancia del controlador TCS34725
-    tcs34725_controller controller (
-        .clk(clk),
-        .rst(rst),
-        .i2c_ready(i2c_ready),
-        .i2c_data(i2c_data_out),
-        .i2c_start(i2c_start),
-        .i2c_reg_addr(i2c_reg_addr),
-        .r(red),
-        .g(green),
-        .b(blue)
-    );
-
-    // Instancia del procesador de color
-    color_processor processor (
+    // --- Procesador de color ---
+    color_processor color_decider (
         .red(red),
         .green(green),
         .blue(blue),
         .color_code(color_code),
-        .ascii_color() // No usamos la salida ASCII aquí
+        .ascii_color(ascii_color)
     );
 
-    // Instancia del driver de salida (solo display)
-    output_driver display_driver (
+    // --- Visualización en display de 7 segmentos ---
+    bcd_to_7seg display (
+        .clk(clk),
+        .rst(rst),
         .color_code(color_code),
-        .seg(seg)
+        .seg(seg),
+        .an(an)
     );
 
 endmodule
