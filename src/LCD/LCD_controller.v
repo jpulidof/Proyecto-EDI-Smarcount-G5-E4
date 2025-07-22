@@ -9,7 +9,7 @@ module LCD_controller #(
 )(
     input clk,
     input rst,
-    input [9:0] contador_externo,  // 🟢 Nuevo puerto externo
+    input [9:0] contador_externo, 
     output reg [DATA_BITS-1:0] data,
     output reg rs,
     output reg rw,
