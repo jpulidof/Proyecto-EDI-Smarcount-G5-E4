@@ -7,9 +7,9 @@ module generador_pulsos #(
     output reg pulse_out
 );
 
-    localparam PULSE_CYCLES = (CLOCK_FREQ / 10000) * PULSE_INTERVAL_MS;
+    localparam PULSE_CYCLES = (CLOCK_FREQ / 1000) * PULSE_INTERVAL_MS;
 
-    reg [7:0] counter;
+    reg [31:0] counter;
 
     always @(posedge clk) begin
         if (rst) begin

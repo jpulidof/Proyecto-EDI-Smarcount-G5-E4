@@ -1,32 +1,28 @@
-**** module/scope: LCD_controller
-     Flip-Flops   : 334
-     Logic Gates  : 960
-     ADDER[2]: 1 units
-     ADDER[8]: 4 units
-     ADDER[32]: 4 units
+**** module/scope: controlador_ultrasonido
+     Flip-Flops   : 19
+     Logic Gates  : 222
+     ADDER[8]: 1 units
+     ADDER[9]: 1 units
+     EQUALITY[2]: 1 units
      EQUALITY[32]: 1 units
-     MAGNITUDE[32]: 5 units
-     MUX[2]: 101 slices
-     LPM[4]: 2 unaccounted
-     LPM[5]: 24 unaccounted
-     LPM[12]: 2 unaccounted
-     LPM[13]: 3 unaccounted
-     LPM[30]: 1 unaccounted
-     LOG[13]: 12 unaccounted
+     MAGNITUDE[32]: 1 units
+     MUX[2]: 27 slices
+     LPM[4]: 1 unaccounted
+     LPM[5]: 5 unaccounted
+     LPM[12]: 1 unaccounted
+     LOG[13]: 3 unaccounted
      LOG[14]: 1 unaccounted
 **** TOTALS
-     Flip-Flops   : 334
-     Logic Gates  : 960
-     ADDER[2]: 1 units
-     ADDER[8]: 4 units
-     ADDER[32]: 4 units
+     Flip-Flops   : 19
+     Logic Gates  : 222
+     ADDER[8]: 1 units
+     ADDER[9]: 1 units
+     EQUALITY[2]: 1 units
      EQUALITY[32]: 1 units
-     MAGNITUDE[32]: 5 units
-     MUX[2]: 101 slices
-     LPM[4]: 2 unaccounted
-     LPM[5]: 24 unaccounted
-     LPM[12]: 2 unaccounted
-     LPM[13]: 3 unaccounted
-     LPM[30]: 1 unaccounted
-     LOG[13]: 12 unaccounted
+     MAGNITUDE[32]: 1 units
+     MUX[2]: 27 slices
+     LPM[4]: 1 unaccounted
+     LPM[5]: 5 unaccounted
+     LPM[12]: 1 unaccounted
+     LOG[13]: 3 unaccounted
      LOG[14]: 1 unaccounted
