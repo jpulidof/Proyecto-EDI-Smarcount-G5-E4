@@ -28,7 +28,7 @@ A continuación se presenta la descripción de cada módulo que compone el proye
 - controlador_ultrasonido:
 - controlador_ultrasonido.bak:
 
-#### Pntalla LCD
+#### Pantalla LCD
 - LCD1602_controller:
   
 Este módulo implementa un controlador para una pantalla LCD tipo 1602, permitiendo mostrar tanto texto estático como datos numéricos dinámicos. El controlador se basa en una máquina de estados finitos (FSM) que gestiona de forma secuencial la inicialización de la pantalla, la escritura de mensajes predefinidos en ambas líneas y la actualización periódica del contenido dinámico, como la cantidad de objetos contados. El texto estático se almacena en una memoria cargada desde archivo, mientras que los valores dinámicos se reciben como entrada (in) y se descomponen en centenas, decenas y unidades para su visualización en formato ASCII.
@@ -37,6 +37,7 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 
 - 
 ### Diagramas
+#### Pantalla LCD
 
 
 ## Simulaciones 
