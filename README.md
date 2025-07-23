@@ -38,6 +38,16 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 - 
 ### Diagramas
 #### Pantalla LCD
+![Diagrama de estados](images/estados_LCD.png)
+
+* Descripción de cada estado:
+- IDLE:	Espera la señal ready_i. Se resetean los contadores.
+- CONFIG_CMD1: Se envían comandos de inicialización desde config_mem.
+- WR_STATIC_TEXT_1L: 	Se escribe la primera línea del mensaje estático desde static_data_mem.
+- CONFIG_CMD2:	Se envía el comando para pasar a la segunda línea (START_2LINE).
+- WR_STATIC_TEXT_2L:	Se escribe la segunda línea del mensaje estático.
+- DYNAMIC_TEXT:	Se actualizan los tres dígitos del valor de entrada in (centena, decena, unidad), mostrando el número en ASCII. Avanza con flag_case.
+
 
 
 ## Simulaciones 
