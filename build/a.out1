@@ -1,28 +1,12 @@
-**** module/scope: controlador_ultrasonido
-     Flip-Flops   : 19
-     Logic Gates  : 222
-     ADDER[8]: 1 units
-     ADDER[9]: 1 units
-     EQUALITY[2]: 1 units
-     EQUALITY[32]: 1 units
-     MAGNITUDE[32]: 1 units
-     MUX[2]: 27 slices
-     LPM[4]: 1 unaccounted
-     LPM[5]: 5 unaccounted
-     LPM[12]: 1 unaccounted
-     LOG[13]: 3 unaccounted
+**** module/scope: tcs34725_controller
+     Flip-Flops   : 69
+     Logic Gates  : 12
+     LPM[5]: 16 unaccounted
+     LOG[13]: 7 unaccounted
      LOG[14]: 1 unaccounted
 **** TOTALS
-     Flip-Flops   : 19
-     Logic Gates  : 222
-     ADDER[8]: 1 units
-     ADDER[9]: 1 units
-     EQUALITY[2]: 1 units
-     EQUALITY[32]: 1 units
-     MAGNITUDE[32]: 1 units
-     MUX[2]: 27 slices
-     LPM[4]: 1 unaccounted
-     LPM[5]: 5 unaccounted
-     LPM[12]: 1 unaccounted
-     LOG[13]: 3 unaccounted
+     Flip-Flops   : 69
+     Logic Gates  : 12
+     LPM[5]: 16 unaccounted
+     LOG[13]: 7 unaccounted
      LOG[14]: 1 unaccounted

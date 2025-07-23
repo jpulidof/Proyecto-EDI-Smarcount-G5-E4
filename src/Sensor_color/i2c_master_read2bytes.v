@@ -47,7 +47,7 @@ module i2c_master_read2bytes (
                     if (start) begin
                         busy <= 1;
                         sda_out <= 1;
-                        scl <= 1;
+                        scl k<= 1;
                         sda_oe <= 1;
                         state <= START;
                     end

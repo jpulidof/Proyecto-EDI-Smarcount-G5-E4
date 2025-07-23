@@ -1,0 +1,59 @@
+module motor_tb6612_control (
+    input wire clk,             // Reloj
+    input wire rst,             // Reset
+    input wire [1:0] sel,       // Selección: 00=stop, 01=CW, 10=CCW, 11=protegido
+    input wire [7:0] pwm_duty,  // Ciclo útil PWM (0-255)
+    output wire AIN1,           // Dirección motor A
+    output wire AIN2,           // Dirección motor A
+    output wire PWMA,           // PWM motor A
+    output wire STBY            // Standby (activo en alto)
+);
+
+    // Salida de control protegida
+    reg [1:0] sel_protected;
+
+    // FSM de protección simple
+    localparam IDLE                = 2'b00;
+    localparam CLOCK_WISE         = 2'b01;
+    localparam COUNTER_CLOCK_WISE = 2'b10;
+    localparam PROTECTION         = 2'b11;
+
+    reg [1:0] fsm_state, next_state;
+
+    // Transición de estado (usa flanco negativo)
+    always @(negedge clk or posedge rst) begin
+        if (rst)
+            fsm_state <= IDLE;
+        else
+            fsm_state <= next_state;
+    end
+
+    // Lógica de próxima transición
+    always @(*) begin
+        next_state = sel;  // Transición directa según sel
+    end
+
+    // Lógica de salida protegida
+    always @(*) begin
+        if (fsm_state == PROTECTION)
+            sel_protected = 2'b00;
+        else
+            sel_protected = sel;
+    end
+
+    // Salidas AIN1 y AIN2 conectadas a dirección protegida
+    assign AIN1 = sel_protected[1];
+    assign AIN2 = sel_protected[0];
+
+    // STBY siempre en alto → driver habilitado
+    assign STBY = 1'b1;
+
+    // PWM Generator sencillo
+    reg [7:0] pwm_counter = 0;
+    always @(posedge clk) begin
+        pwm_counter <= pwm_counter + 1;
+    end
+
+    assign PWMA = (pwm_counter < pwm_duty) ? 1'b1 : 1'b0;
+
+endmodule
