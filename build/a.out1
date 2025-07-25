@@ -1,12 +1,12 @@
-**** module/scope: tcs34725_controller
-     Flip-Flops   : 69
-     Logic Gates  : 12
-     LPM[5]: 16 unaccounted
-     LOG[13]: 7 unaccounted
+**** module/scope: bcd_to_7seg
+     Flip-Flops   : 0
+     Logic Gates  : 0
+     LPM[5]: 1 unaccounted
+     LOG[13]: 1 unaccounted
      LOG[14]: 1 unaccounted
 **** TOTALS
-     Flip-Flops   : 69
-     Logic Gates  : 12
-     LPM[5]: 16 unaccounted
-     LOG[13]: 7 unaccounted
+     Flip-Flops   : 0
+     Logic Gates  : 0
+     LPM[5]: 1 unaccounted
+     LOG[13]: 1 unaccounted
      LOG[14]: 1 unaccounted

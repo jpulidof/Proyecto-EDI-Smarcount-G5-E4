@@ -58,7 +58,7 @@ initial begin
     clk_16ms <= 1'b0;
     clk_counter <= 'b0;
 	 udc <= 2'b00;
-    $readmemh("/home/jose/Documents/Proyecto-EDI-Smarcount-G5-E4/src/LCD/data.txt", static_data_mem);    
+    $readmemh("data.txt", static_data_mem);    
 	config_mem[0] <= LINES2_MATRIX5x8_MODE8bit;
 	config_mem[1] <= SHIFT_CURSOR_RIGHT;
 	config_mem[2] <= DISPON_CURSOROFF;
@@ -113,7 +113,7 @@ always @(posedge clk_16ms) begin
 		  data <= 'b0;
           flag_case <= 2'b00;
 			 udc <= 2'b00;
-        $readmemh("/home/jose/Documents/Proyecto-EDI-Smarcount-G5-E4/src/LCD/data.txt", static_data_mem);
+        $readmemh("data.txt", static_data_mem);
     end else begin
         case (next_state)
             IDLE: begin

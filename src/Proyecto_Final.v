@@ -1,10 +1,8 @@
-`timescale 1ns / 1ps
-
 module Proyecto_Final(
     input clk,
-    input rst_n,               // Reset activo bajo
-    input echo_i,              // ECHO desde sensor
-    output trigger_o,          // TRIG hacia sensor
+    input rst_n,
+    input echo,                 // Entrada del HC-SR04
+    output trig,                // Salida del HC-SR04
     output [7:0] LCD_DATA,
     output LCD_RS,
     output LCD_RW,
@@ -12,71 +10,58 @@ module Proyecto_Final(
 );
 
     wire rst = ~rst_n;
+    wire [15:0] distancia_cm;
+    wire [6:0] contador_display;
+    reg [6:0] contador;
+    reg objeto_detectado;
 
-    // Señales internas
-    wire ready_pulse;
-    wire object_detected;
-    wire [31:0] echo_count;
-
-    reg [9:0] contador_objetos;
-    reg object_detected_prev;
-    wire detected_rise = (object_detected == 1'b1 && object_detected_prev == 1'b0);
-
-    // Generador de pulsos
-    generador_pulsos #(
+    // ---------- ULTRASONIDO ----------
+    ultrasonic_controller #(
         .CLOCK_FREQ(50_000_000),
-        .PULSE_INTERVAL_MS(60)
-    ) u_pulso (
-        .clk(clk),
-        .rst(rst),
-        .pulse_out(ready_pulse)
-    );
-
-    // Sensor ultrasónico
-    controlador_ultrasonido #(
-        .CLOCK_FREQ(50_000_000),
-        .DIST_THRESHOLD_CM(10)
+        .SOUND_SPEED(34300),
+        .TIME_TRIG(500)               // 10 us a 50 MHz
     ) u_ultrasonido (
         .clk(clk),
         .rst(rst),
-        .ready_i(ready_pulse),
-        .echo_i(echo_i),
-        .trigger_o(trigger_o),
-        .object_detected_o(object_detected),
-        .echo_counter(echo_count)
+        .echo(echo),
+        .trig(trig),
+        .distancia_cm(distancia_cm)
     );
 
-    // Contador de objetos
+    // ---------- LÓGICA DE CONTADOR ----------
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            contador_objetos <= 0;
-            object_detected_prev <= 0;
+            contador <= 0;
+            objeto_detectado <= 0;
         end else begin
-            object_detected_prev <= object_detected;
-            if (detected_rise) begin
-                if (contador_objetos < 999)
-                    contador_objetos <= contador_objetos + 1;
-                else
-                    contador_objetos <= 0;
+            if (distancia_cm < 10 && !objeto_detectado) begin
+                contador <= contador + 1;
+                objeto_detectado <= 1;
+            end
+            if (distancia_cm >= 10) begin
+                objeto_detectado <= 0;
             end
         end
     end
 
-    // LCD Controller
-    LCD_controller #(
-        .NUM_COMMANDS(5),
+    assign contador_display = contador;
+
+    // ---------- LCD ----------
+    LCD1602_controller #(
+        .NUM_COMMANDS(4),
         .NUM_DATA_ALL(32),
         .NUM_DATA_PERLINE(16),
         .DATA_BITS(8),
-        .COUNT_MAX(800_000)
+        .COUNT_MAX(800000)
     ) u_lcd (
         .clk(clk),
-        .rst(rst),
-        .contador_externo(contador_objetos),
-        .data(LCD_DATA),
+        .in(contador_display),
+        .reset(rst),
+        .ready_i(1'b1),             // Siempre listo para escribir
         .rs(LCD_RS),
         .rw(LCD_RW),
-        .en(LCD_E)
+        .enable(LCD_E),
+        .data(LCD_DATA)
     );
 
 endmodule
