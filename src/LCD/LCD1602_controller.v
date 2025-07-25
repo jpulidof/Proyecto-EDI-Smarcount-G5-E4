@@ -4,7 +4,7 @@
                                       DATA_BITS = 8,
                                       COUNT_MAX = 800000)(
     input clk,
-    input [6:0] in,            
+    input [7:0] in,            
     input reset,          
     input ready_i,
     output reg rs,        

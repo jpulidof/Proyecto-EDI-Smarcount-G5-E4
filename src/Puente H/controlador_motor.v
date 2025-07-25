@@ -14,9 +14,7 @@ module controlador_motor (
     reg [1:0] fsm_state, next_state;
     localparam IDLE = 2'b00, CLOCK_WISE = 2'b01, COUNTER_CLOCK_WISE = 2'b10, PROTECTION = 2'b11;
 
-    // ===============================
-    // LÓGICA DE DETENCIÓN TEMPORAL
-    // ===============================
+ 
     reg pause_active = 0;
     reg [26:0] pause_counter = 0;  // 2^27 / 50e6 ≈ 2.68 segundos
 
@@ -35,9 +33,7 @@ module controlador_motor (
         end
     end
 
-    // =====================================
-    // FSM de dirección (sin cambios)
-    // =====================================
+ 
     always @(negedge clk or posedge rst) begin
         if (rst)
             fsm_state <= IDLE;
@@ -60,9 +56,7 @@ module controlador_motor (
     assign AIN2 = sel_protected[1];
     assign STBY = 1'b1;
 
-    // =====================================
-    // PWM Generador lento (sin cambios)
-    // =====================================
+ 
     reg [11:0] clkdiv = 0;
     always @(posedge clk) clkdiv <= clkdiv + 1;
     wire pwm_clk = clkdiv[11];  // ~24kHz
