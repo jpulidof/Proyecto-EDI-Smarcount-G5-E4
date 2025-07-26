@@ -13,6 +13,7 @@ module top_ultrasonic #(
     output wire LCD_E,
 	 input infrarrojo,
     output wire led,
+	 output wire prueba,
 
     // Señales adicionales necesarias para el controlador_motor
     input wire [1:0] sel,
@@ -26,20 +27,29 @@ module top_ultrasonic #(
 
     wire rst = ~rst_n;
 
-    wire [9:0] count;
-//
+    wire [7:0] count;
+
 //    Ultrasonido #(25) sensor_ultrasonido (
 //        .clk(clk),
 //        .Enable(1'b1),
 //        .Echo(echo_i),
-//        .Led(led),
-//        .Trigger(trigger_o)
+//       .Led(led),
+//       .Trigger(trigger_o),
+//		 .contador_eventos(count)
 //    );
+antirrebote antirrebote_inst(
+.clk(clk),
+.btn(infrarrojo),
+.clean(infrarrojo_limpio)
+);
 
-    contador contador_inst (
-        .clk(infrarrojo),
-        .rst(rst),
-        .count(count)
+wire infrarrojo_limpio;
+
+
+   contador contador_inst (
+        .cuenta(infrarrojo_limpio),
+        .rst_n(rst_n),
+        .salida(count)
     );
 
     LCD1602_controller lcd (
@@ -66,4 +76,5 @@ module top_ultrasonic #(
         .STBY(STBY)
     );
 
+	 assign prueba =infrarrojo_limpio;
 endmodule

@@ -1,0 +1,27 @@
+module antirrebote #(
+  parameter FREQ = 50_000_000,
+  parameter TIME = 5
+)(
+  input wire clk,
+  input wire btn,
+  output reg limpio
+);
+
+  localparam MAX = (FREQ / 1000) * TIME;
+
+  reg [$clog2(MAX)-1:0] cont = 0;
+  reg prev = 0;
+
+  always @(posedge clk) begin
+    if (btn == prev) begin
+      if (cont < MAX)
+        cont <= cont + 1;
+      else
+        limpio <= btn;
+    end else begin
+      cont <= 0;
+      prev <= btn;
+    end
+  end
+
+endmodule
