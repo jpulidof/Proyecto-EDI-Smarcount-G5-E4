@@ -35,11 +35,6 @@ Este módulo implementa un controlador para una pantalla LCD tipo 1602, permitie
 
 Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un divisor de frecuencia que genera pulsos cada 16 ms. A cada transición del pulso, se avanza en la FSM para enviar comandos o datos según el estado actual. La lógica de escritura dinámica permite mostrar números de hasta tres dígitos, usando una pequeña máquina de estados dentro del estado DYNAMIC_TEXT. Este diseño modular y parametrizable no solo cumple con los requerimientos de interfaz, sino que también permite adaptarse fácilmente a otros sistemas embebidos basados en FPGA que requieran salida visual clara y actualizable.
 
-- 
-### Diagramas
-
-
-#### Pantalla LCD
 ![Diagrama de estados](images/estados_LCD.png)
 
 * Descripción de cada estado:
@@ -50,6 +45,8 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 - WR_STATIC_TEXT_2L:	Se escribe la segunda línea del mensaje estático.
 - DYNAMIC_TEXT:	Se actualizan los tres dígitos del valor de entrada in (centena, decena, unidad), mostrando el número en ASCII. Avanza con flag_case.
 
+
+#### Puente H
 
 
 ## Simulaciones 
