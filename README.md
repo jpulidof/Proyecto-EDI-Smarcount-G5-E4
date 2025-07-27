@@ -37,6 +37,7 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 
 - 
 ### Diagramas
+
 #### Pantalla LCD
 ![Diagrama de estados](images/estados_LCD.png)
 
