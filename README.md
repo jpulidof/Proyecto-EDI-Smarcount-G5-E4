@@ -49,7 +49,7 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 #### Puente H
 
 
-![Diagrama de puente H]([images/estados puenteH.jpg])
+![Diagrama de puente H](images/estados puenteH.jpg)
 
 ## Simulaciones 
 
