@@ -38,8 +38,6 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 - 
 ### Diagramas
 
-![Diagrama de LCD](images/lcd_page-0001.jpg)
-![Diagrama de LCD](images/puente%20h_page-0001.jpg)
 
 #### Pantalla LCD
 ![Diagrama de estados](images/estados_LCD.png)
@@ -60,6 +58,10 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 
 
 ## Implementación
+##Anexos
+
+![Diagrama de LCD](images/lcd_page-0001.jpg)
+![Diagrama de LCD](images/puente%20h_page-0001.jpg)
 
 
 ## Conclusiones
