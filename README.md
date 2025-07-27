@@ -59,9 +59,12 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 
 ## Implementación
 
-#### Circuito antirebote
+El proyecto se enfocó en el desarrollo de un sistema automatizado, basado en FPGA, para el conteo de cubos que se desplazaban sobre una banda transportadora. Para detectar cada elemento, se utilizó un sensor ultrasónico cuya señal fue procesada por la FPGA. Esta actuó como unidad de control, incrementando un contador y mostrando en una pantalla LCD el número total de cubos detectados en tiempo real. El diseño permitió mantener un funcionamiento confiable incluso cuando la velocidad de transporte variaba, y su estructura modular ofrece la posibilidad de adaptarlo fácilmente a otras aplicaciones industriales que requieran tareas similares de conteo o clasificación.
 
-En el proyecto se implementó un circuito antirrebote con el fin de evitar lecturas erróneas ocasionadas por los rebotes eléctricos presentes cuando una señal digital cambia de estado, como ocurre comúnmente en botones o entradas mecánicas. En este caso, se aplicó al sensor ultrasónico HC-SR04, específicamente a la señal del pin \texttt{echo}, encargada de indicar el tiempo de retorno de la onda ultrasónica. Al sincronizar esta señal con el reloj del sistema y exigir que cualquier cambio de estado se mantuviera estable durante un intervalo mínimo antes de ser validado, se evitó que fluctuaciones rápidas o interferencias generaran detecciones falsas o mediciones incorrectas. Con ello, se mejoró la precisión del conteo registrado por el sensor.
+Se optó por emplear una FPGA debido a su capacidad de ejecutar varias operaciones en paralelo, lo que facilitó la integración de la lectura del sensor, el procesamiento del conteo y el control de la visualización. Esta característica, sumada a su flexibilidad y posibilidad de reconfiguración, hizo que el sistema resultara eficiente y escalable.
+
+Como complemento, se implementó un circuito antirrebote destinado a mejorar la estabilidad de la señal proveniente del pin \texttt{echo} del sensor HC-SR04. Gracias a este filtrado, se evitaron lecturas falsas ocasionadas por fluctuaciones o interferencias, lo que contribuyó a aumentar la precisión y la confiabilidad de las mediciones obtenidas.
+
 
  
 ## Anexos
