@@ -38,7 +38,7 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 - 
 ### Diagramas
 
-![Diagrama de LCD](i[mages/lcd.pdf](https://github.com/jpulidof/Proyecto-EDI-Smarcount-G5-E4/blob/main/images/lcd_page-0001.jpg))
+![Diagrama de LCD](images/lcd_page-0001.jpg))
 
 
 #### Pantalla LCD
