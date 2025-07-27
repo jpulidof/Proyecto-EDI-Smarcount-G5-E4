@@ -58,6 +58,12 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 
 
 ## Implementación
+
+#### Circuito antirebote
+
+Un circuito antirrebote es un sistema diseñado para eliminar las lecturas erróneas causadas por los rebotes eléctricos que se producen cuando una señal digital cambia de estado, como ocurre comúnmente con botones o entradas mecánicas. En el contexto de un sensor de ultrasonido, como el HC-SR04, el antirrebote se aplica típicamente a la señal de entrada del pin echo, que indica el tiempo de retorno de la onda ultrasónica. Si esta señal presenta fluctuaciones rápidas o inestables debido a interferencias o ruido, el sistema podría interpretar múltiples detecciones falsas o medir distancias incorrectas. El circuito antirrebote sincroniza esta señal con el reloj del sistema y
+verifica que el cambio de estado se mantenga constante durante un tiempo mínimo antes de considerarlo válido. Así, se asegura que solo se registren transiciones reales y estables, mejorando la precisión y confiabilidad de la medición del sensor ultrasónico.
+
  
 ## Anexos
 
