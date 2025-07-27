@@ -49,6 +49,12 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 #### Puente H
 
 
+
+
+
+
+
+
 ![Diagrama de puente H](https://github.com/jpulidof/Proyecto-EDI-Smarcount-G5-E4/blob/main/images/estados%20puenteH.jpg?raw=true)
 
 ## Simulaciones 
