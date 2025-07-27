@@ -58,7 +58,8 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 
 
 ## Implementación
-##Anexos
+ 
+## Anexos
 
 ![Diagrama de LCD](images/lcd_page-0001.jpg)
 ![Diagrama de LCD](images/puente%20h_page-0001.jpg)
