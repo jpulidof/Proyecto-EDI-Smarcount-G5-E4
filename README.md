@@ -49,6 +49,8 @@ Para cumplir con los tiempos requeridos por la pantalla, el módulo emplea un di
 #### Puente H
 
 
+![Diagrama de LCD](images/estados puenteH.png)
+
 ## Simulaciones 
 
 <!-- (Incluir las de Digital si hicieron uso de esta herramienta, pero también deben incluir simulaciones realizadas usando un simulador HDL como por ejemplo Icarus Verilog + GTKwave) -->
