@@ -1,67 +1,68 @@
-module Proyecto_Final(
-    input clk,
-    input rst_n,
-    input echo,                 // Entrada del HC-SR04
-    output trig,                // Salida del HC-SR04
-    output [7:0] LCD_DATA,
-    output LCD_RS,
-    output LCD_RW,
-    output LCD_E
+module Proyecto_Final #(
+    parameter CLOCK_FREQ = 50_000_000,       // Frecuencia del sistema (50 MHz)
+    parameter PULSE_INTERVAL_MS = 60,        // Intervalo entre pulsos
+    parameter DIST_THRESHOLD_CM = 10
+)(
+    input wire clk,
+    input wire rst_n,
+    output wire [7:0] LCD_DATA,
+    output wire LCD_RS,
+    output wire LCD_RW,
+    output wire LCD_E,
+	 input infrarrojo,
+
+
+    // Señales adicionales necesarias para el controlador_motor
+    input wire [7:0] pwm_duty,
+    input wire boton_pausa,
+    output wire AIN1,
+    output wire AIN2,
+    output wire PWMA,
+    output wire STBY
 );
 
     wire rst = ~rst_n;
-    wire [15:0] distancia_cm;
-    wire [6:0] contador_display;
-    reg [6:0] contador;
-    reg objeto_detectado;
 
-    // ---------- ULTRASONIDO ----------
-    ultrasonic_controller #(
-        .CLOCK_FREQ(50_000_000),
-        .SOUND_SPEED(34300),
-        .TIME_TRIG(500)               // 10 us a 50 MHz
-    ) u_ultrasonido (
-        .clk(clk),
-        .rst(rst),
-        .echo(echo),
-        .trig(trig),
-        .distancia_cm(distancia_cm)
+    wire [7:0] count;
+
+
+antirrebote antirrebote_inst(
+.clk(clk),
+.btn(infrarrojo),
+.clean(infrarrojo_limpio)
+);
+
+wire infrarrojo_limpio;
+
+
+   contador contador_inst (
+        .cuenta(infrarrojo_limpio),
+        .rst_n(rst_n),
+        .salida(count)
     );
 
-    // ---------- LÓGICA DE CONTADOR ----------
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            contador <= 0;
-            objeto_detectado <= 0;
-        end else begin
-            if (distancia_cm < 10 && !objeto_detectado) begin
-                contador <= contador + 1;
-                objeto_detectado <= 1;
-            end
-            if (distancia_cm >= 10) begin
-                objeto_detectado <= 0;
-            end
-        end
-    end
-
-    assign contador_display = contador;
-
-    // ---------- LCD ----------
-    LCD1602_controller #(
-        .NUM_COMMANDS(4),
-        .NUM_DATA_ALL(32),
-        .NUM_DATA_PERLINE(16),
-        .DATA_BITS(8),
-        .COUNT_MAX(800000)
-    ) u_lcd (
+    LCD1602_controller lcd (
         .clk(clk),
-        .in(contador_display),
         .reset(rst),
-        .ready_i(1'b1),             // Siempre listo para escribir
+        .in(count),
+        .ready_i(1'b1),
         .rs(LCD_RS),
         .rw(LCD_RW),
         .enable(LCD_E),
         .data(LCD_DATA)
+    );
+
+    // Instancia del controlador de motor
+    controlador_motor motor_ctrl (
+        .clk(clk),
+        .rst(rst_n),
+        .sel(2'b00),
+        .pwm_duty(pwm_duty),
+        .boton_pausa(boton_pausa),
+        .AIN1(AIN1),
+        .AIN2(AIN2),
+        .PWMA(PWMA),
+        .STBY(STBY)
     );
 
 endmodule
