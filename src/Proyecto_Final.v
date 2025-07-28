@@ -5,14 +5,14 @@ module Proyecto_Final #(
 )(
     input wire clk,
     input wire rst_n,
+    //LCD
     output wire [7:0] LCD_DATA,
     output wire LCD_RS,
     output wire LCD_RW,
     output wire LCD_E,
-	 input infrarrojo,
-
-
-    // Señales adicionales necesarias para el controlador_motor
+    //infrarrojo
+	input infrarrojo,
+    //motor
     input wire [7:0] pwm_duty,
     input wire boton_pausa,
     output wire AIN1,
@@ -22,20 +22,19 @@ module Proyecto_Final #(
 );
 
     wire rst = ~rst_n;
-
     wire [7:0] count;
 
 
-antirrebote antirrebote_inst(
-.clk(clk),
-.btn(infrarrojo),
-.clean(infrarrojo_limpio)
-);
+    antirrebote antirrebote_inst(
+        .clk(clk),
+        .btn(infrarrojo),
+        .clean(infrarrojo_limpio)
+    );
 
-wire infrarrojo_limpio;
+    wire infrarrojo_limpio;
 
 
-   contador contador_inst (
+    contador contador_inst (
         .cuenta(infrarrojo_limpio),
         .rst_n(rst_n),
         .salida(count)
@@ -52,7 +51,6 @@ wire infrarrojo_limpio;
         .data(LCD_DATA)
     );
 
-    // Instancia del controlador de motor
     controlador_motor motor_ctrl (
         .clk(clk),
         .rst(rst_n),
@@ -64,5 +62,5 @@ wire infrarrojo_limpio;
         .PWMA(PWMA),
         .STBY(STBY)
     );
-
+	 
 endmodule

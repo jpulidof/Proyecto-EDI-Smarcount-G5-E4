@@ -1,4 +1,4 @@
-`include "src/Ultrasonido/contador.v"
+`include "src/Contador_infrarrojo/contador.v"
 `timescale 1ns/1ps
 
 module contador_tb();
